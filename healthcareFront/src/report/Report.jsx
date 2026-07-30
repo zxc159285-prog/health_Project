@@ -853,8 +853,18 @@ function StatsSkeleton() {
 }
 
 function Report() {
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const gymId = user.gymId;
+
+  // 트레이너 권한 사용자가 이탈 리포트 페이지로 직접 진입 시 접근 차단
+  useEffect(() => {
+    const role = String(user.role || '').toLowerCase();
+    if (role === 'trainer') {
+      alert('이탈 분석 리포트는 사장님만 확인하실 수 있습니다.');
+      navigate('/fitb', { replace: true });
+    }
+  }, [user.role, navigate]);
 
   const [mode, setMode] = useState('daily');       // 'daily' | 'monthly'
   const [periods, setPeriods] = useState([]);

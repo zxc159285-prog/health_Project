@@ -1,5 +1,5 @@
 import { Link, Outlet } from 'react-router-dom';
-import { isGymRole } from '../config/uiNavigation.js';
+import { isGymRole, normalizeRole } from '../config/uiNavigation.js';
 import NavIcon from '../components/uiIcons.jsx';
 import './B2bMain.css';
 
@@ -33,7 +33,7 @@ function B2bMain() {
           <strong>계정 설정</strong>
           <span>내 계정 정보와 기본 설정을 관리합니다.</span>
         </Link>
-        {showGymMenus && (
+        {showGymMenus && (normalizeRole(user.role) === 'owner' || normalizeRole(user.role) === 'admin') && (
           <Link to="/fitb/report" className="b2b-profile-page__card">
             <span className="b2b-profile-page__card-icon" aria-hidden="true"><NavIcon id="churnlist" size={20} /></span>
             <strong>회원·이탈 분석</strong>
